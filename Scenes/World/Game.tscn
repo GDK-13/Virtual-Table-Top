@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccew8tnr165ud"]
+
+[ext_resource type="PackedScene" uid="uid://d2mgo3gyuy0rf" path="res://Token.tscn" id="1_wbfu4"]
+
+[node name="Game" type="Node2D"]
+
+[node name="MapLayer" type="Node2D" parent="."]
+
+[node name="BackgroundMap" type="TextureRect" parent="MapLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GridContainer" type="GridContainer" parent="MapLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Camera2D" type="Camera2D" parent="MapLayer"]
+
+[node name="TokenContainer" type="Node2D" parent="."]
+
+[node name="Token" parent="TokenContainer" instance=ExtResource("1_wbfu4")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="TokenContainer"]
+_spawnable_scenes = PackedStringArray("uid://d2mgo3gyuy0rf")
