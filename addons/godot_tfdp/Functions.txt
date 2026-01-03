@@ -1,0 +1,83 @@
+================================================================
+      COLA RÁPIDA: GODOT TEXT FILE DATA PERSISTENCE
+================================================================
+
+1. INSTALAÇÃO E SETUP
+----------------------------------------------------------------
+- Ative o plugin em: Project > Project Settings > Plugins.
+- O Autoload (Singleton) "Data" é criado automaticamente.
+- Local dos arquivos salvos: user://Data/ (dentro da pasta do usuário).
+
+
+2. COMANDOS PRINCIPAIS (CRUD)
+----------------------------------------------------------------
+
+>>> VARIAVEL GLOBAL: Data
+
+[A] CRIAR OU ACESSAR UM ARQUIVO (LOAD)
+   var save = Data.new_data_dict("meu_save")
+   # Se o arquivo já existir no disco, ele carrega.
+   # Se não existir, cria um novo vazio na memória.
+
+
+[B] ADICIONAR DADOS (CREATE)
+   # Use .add() no _ready() para garantir que os dados existam.
+   # Se a chave JÁ existir, o .add() IGNORA (não sobrescreve).
+   save.add("vidas", 3)
+   save.add("nome", "Player1")
+
+
+[C] ATUALIZAR DADOS (UPDATE)
+   # Use .update() quando o valor mudar durante o jogo.
+   # ATENÇÃO: Se a chave NÃO existir, gera um ERRO.
+   save.update("vidas", 5)
+
+
+[D] LER DADOS (READ)
+   # Os valores ficam dentro de .fields["chave"].value
+   # É recomendável verificar se existe antes de ler.
+   if save.exists("vidas"):
+       var hp = save.fields["vidas"].value
+
+
+[E] REMOVER DADOS (DELETE)
+   save.remove("chave_para_deletar")
+
+
+[F] SALVAR NO DISCO (SAVE)
+   save.save()       # Salva apenas este arquivo específico
+   Data.save_all()   # Salva todos os arquivos abertos de uma vez
+
+
+3. TIPOS SUPORTADOS
+----------------------------------------------------------------
+O plugin salva em texto simples (.txt).
+NÃO TENTE SALVAR OBJETOS COMPLEXOS (Nós, Resources, Arrays).
+
+[ OK ] int (Inteiros ex: 1, 10, -5)
+[ OK ] float (Decimais ex: 1.5, 0.001)
+[ OK ] String (Texto ex: "Kevin")
+[ OK ] Vector2 (Posição 2D ex: Vector2(10, 20))
+[ OK ] Vector2i (Posição 2D Inteira)
+
+
+4. EXEMPLO DE CÓDIGO (COPIAR E COLAR)
+----------------------------------------------------------------
+func _ready():
+    # 1. Pega o arquivo de save (cria ou carrega)
+    var dados = Data.new_data_dict("progresso_jogador")
+    
+    # 2. Inicializa valores padrão (só funciona na primeira vez)
+    dados.add("fase_atual", 1)
+    dados.add("posicao", Vector2(0, 0))
+    
+    # 3. Lê e aplica o valor salvo
+    if dados.exists("posicao"):
+        global_position = dados.fields["posicao"].value
+        print("Posição carregada!")
+
+func _on_checkpoint_reached():
+    # 4. Atualiza e Salva
+    var dados = Data.new_data_dict("progresso_jogador")
+    dados.update("posicao", global_position)
+    dados.save()

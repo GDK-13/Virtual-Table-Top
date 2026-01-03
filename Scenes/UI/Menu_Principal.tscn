@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cov0vyhe7ou4n"]
+[gd_scene load_steps=4 format=3 uid="uid://cov0vyhe7ou4n"]
 
-[ext_resource type="PackedScene" uid="uid://ce7ypripko0uo" path="res://UI_Elements/button.tscn" id="1_v6bag"]
+[ext_resource type="PackedScene" uid="uid://ce7ypripko0uo" path="res://Scenes/UI/Components/button.tscn" id="1_v6bag"]
+[ext_resource type="Script" uid="uid://t12qhnn15lj2" path="res://Scripts/UI/menu_principal.gd" id="1_xr74u"]
+[ext_resource type="PackedScene" uid="uid://dlwxbyyqnamh6" path="res://Scenes/UI/Components/line_edit.tscn" id="3_esfoi"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -9,6 +11,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_xr74u")
+JoinButtonPath = "res://Scenes/UI/player_dialog_panel.tscn"
+HostButtonPath = "res://Scenes/UI/host_dialog_panel.tscn"
 
 [node name="TituloMenuPrincipal" type="Label" parent="."]
 layout_mode = 1
@@ -25,33 +30,123 @@ text = "Virtual Table Top"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -169.5
-offset_top = -156.0
-offset_right = 169.5
-offset_bottom = 156.0
+offset_left = -367.5
+offset_top = -132.5
+offset_right = 367.5
+offset_bottom = 132.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 20
 
-[node name="BtnHost" parent="VBoxContainer" instance=ExtResource("1_v6bag")]
+[node name="BtnHost" parent="VSplitContainer/HSplitContainer/VBoxContainer" instance=ExtResource("1_v6bag")]
 layout_mode = 2
 text = "Host"
 
-[node name="BtnJoin" parent="VBoxContainer" instance=ExtResource("1_v6bag")]
+[node name="BtnCamp" parent="VSplitContainer/HSplitContainer/VBoxContainer" instance=ExtResource("1_v6bag")]
+clip_contents = true
+layout_mode = 2
+text = "Criar Campanha"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VSplitContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="BtnJoin" parent="VSplitContainer/HSplitContainer/VBoxContainer2" instance=ExtResource("1_v6bag")]
 layout_mode = 2
 text = "Join"
 
-[node name="BtnConfig" parent="VBoxContainer" instance=ExtResource("1_v6bag")]
+[node name="BtnConfig" parent="VSplitContainer/HSplitContainer/VBoxContainer2" instance=ExtResource("1_v6bag")]
 layout_mode = 2
 text = "Configurações"
 
-[node name="BtnQuit" parent="VBoxContainer" instance=ExtResource("1_v6bag")]
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer"]
 layout_mode = 2
+size_flags_vertical = 2
+
+[node name="BtnQuit" parent="VSplitContainer/VBoxContainer" instance=ExtResource("1_v6bag")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 text = "Sair"
+
+[node name="CampWin" type="Window" parent="."]
+unique_name_in_owner = true
+gui_embed_subwindows = true
+oversampling_override = 1.0
+title = "Criação de Capanha"
+initial_position = 1
+size = Vector2i(350, 350)
+visible = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CampWin"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -141.5
+offset_top = -105.0
+offset_right = 141.5
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CampWin/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="CampName" type="Label" parent="CampWin/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 24
+text = "Nome da campanha:"
+
+[node name="NomeLine" parent="CampWin/VBoxContainer2/VBoxContainer" instance=ExtResource("3_esfoi")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Nome"
+
+[node name="CampDesc" type="Label" parent="CampWin/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 24
+text = "Descrição da campanha:"
+
+[node name="DescLine" parent="CampWin/VBoxContainer2/VBoxContainer" instance=ExtResource("3_esfoi")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="BtnCriar" parent="CampWin/VBoxContainer2" instance=ExtResource("1_v6bag")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 24
+text = "Criar Capanha"
+
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/VBoxContainer/BtnHost" to="." method="_on_btn_host_pressed"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/VBoxContainer/BtnCamp" to="." method="_on_btn_camp_pressed"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/VBoxContainer2/BtnJoin" to="." method="_on_btn_join_pressed"]
+[connection signal="pressed" from="VSplitContainer/VBoxContainer/BtnQuit" to="." method="_on_btn_quit_pressed"]
+[connection signal="pressed" from="CampWin/VBoxContainer2/BtnCriar" to="." method="_on_btn_criar_pressed"]

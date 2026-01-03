@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccj1aq5el7usn"]
+
+[ext_resource type="PackedScene" uid="uid://dlwxbyyqnamh6" path="res://Scenes/UI/Components/line_edit.tscn" id="1_3gcyf"]
+[ext_resource type="Script" uid="uid://tjdbe46vvm1a" path="res://Scripts/UI/player_dialog_panel.gd" id="1_ar28v"]
+[ext_resource type="PackedScene" uid="uid://ce7ypripko0uo" path="res://Scenes/UI/Components/button.tscn" id="2_ar28v"]
+
+[node name="PlayerDialogPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ar28v")
+BtnJoinPath = "res://Scenes/UI/Lobby.tscn"
+BtnQuitPath = "res://Scenes/UI/Menu_Principal.tscn"
+
+[node name="TituloMenuPrincipal" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -294.0
+offset_top = 81.0
+offset_right = 294.0
+offset_bottom = 180.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 72
+text = "Entre em uma sala"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -367.5
+offset_top = -132.5
+offset_right = 367.5
+offset_bottom = 132.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="NameLine" parent="VSplitContainer/VBoxContainer3" instance=ExtResource("1_3gcyf")]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Nome"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="IpLine" parent="VSplitContainer/HSplitContainer/VBoxContainer" instance=ExtResource("1_3gcyf")]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Endereço de ip"
+
+[node name="BtnEnter" parent="VSplitContainer/HSplitContainer/VBoxContainer" instance=ExtResource("2_ar28v")]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Entrar"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VSplitContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="PortaLine" parent="VSplitContainer/HSplitContainer/VBoxContainer2" instance=ExtResource("1_3gcyf")]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Porta"
+
+[node name="BtnQuit" parent="VSplitContainer/HSplitContainer/VBoxContainer2" instance=ExtResource("2_ar28v")]
+layout_mode = 2
+text = "Sair"
+
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/VBoxContainer/BtnEnter" to="." method="_on_btn_enter_pressed"]
+[connection signal="pressed" from="VSplitContainer/HSplitContainer/VBoxContainer2/BtnQuit" to="." method="_on_btn_quit_pressed"]

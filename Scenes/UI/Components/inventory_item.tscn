@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0odbtpf5d5ev"]
+
+[ext_resource type="Script" uid="uid://0xrj8h1tuqu4" path="res://Scripts/UI/Ui_Utils/inventory_item.gd" id="2_wfjdp"]
+
+[node name="InventoryItem" type="TextureRect"]
+custom_minimum_size = Vector2(64, 64)
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_wfjdp")
+item_type = "map"

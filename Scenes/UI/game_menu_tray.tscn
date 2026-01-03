@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://bihic2k8vwrl7"]
+
+[ext_resource type="Script" path="res://Scripts/UI/Ui_Utils/item_rect.gd" id="1_5hds1"]
+[ext_resource type="Texture2D" uid="uid://br13nvhyowrvy" path="res://Assets/Textures/Maps/icon.svg" id="1_fy6sj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64xju"]
+
+[node name="Tab" type="ScrollContainer"]
+offset_right = 136.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_64xju")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+metadata/_tab_index = 0
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 10
+
+[node name="ItemRect" type="TextureRect" parent="GridContainer"]
+layout_mode = 2
+texture = ExtResource("1_fy6sj")
+script = ExtResource("1_5hds1")
+
+[node name="Panel" type="Panel" parent="GridContainer/ItemRect"]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 129.0
+offset_bottom = 129.0
+mouse_filter = 2

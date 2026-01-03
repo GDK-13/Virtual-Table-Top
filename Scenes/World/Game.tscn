@@ -1,24 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccew8tnr165ud"]
+[gd_scene load_steps=5 format=3 uid="uid://ccew8tnr165ud"]
 
-[ext_resource type="PackedScene" uid="uid://d2mgo3gyuy0rf" path="res://Token.tscn" id="1_wbfu4"]
+[ext_resource type="PackedScene" uid="uid://bot8j46kgwvbf" path="res://Scenes/UI/Components/camera_2d.tscn" id="1_m8i7k"]
+[ext_resource type="PackedScene" uid="uid://d2mgo3gyuy0rf" path="res://Scenes/Core/Token.tscn" id="1_wbfu4"]
+[ext_resource type="Script" uid="uid://k1xnblk1qb2y" path="res://Scripts/World/GameFunctions/drop_zone.gd" id="1_x6kl1"]
+[ext_resource type="PackedScene" uid="uid://db5h6t8uxn2pp" path="res://Scenes/UI/game_ui.tscn" id="3_ih2u4"]
 
 [node name="Game" type="Node2D"]
 
+[node name="UiLayer" type="CanvasLayer" parent="."]
+
+[node name="DropZone" type="Control" parent="UiLayer" node_paths=PackedStringArray("map_node", "world_container")]
+layout_mode = 3
+anchor_left = -1.1008403
+anchor_top = -0.92542785
+anchor_right = 1.9885409
+anchor_bottom = 2.572127
+offset_left = -570.0
+offset_top = -529.0
+offset_right = 870.0
+offset_bottom = 371.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("1_x6kl1")
+map_node = NodePath("../../MapLayer/MapRect")
+token_scene = ExtResource("1_wbfu4")
+world_container = NodePath("../../TokenContainer")
+metadata/_edit_use_anchors_ = true
+
+[node name="GameUi" parent="UiLayer" instance=ExtResource("3_ih2u4")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1309.0
+offset_bottom = 818.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
 [node name="MapLayer" type="Node2D" parent="."]
+position = Vector2(654, 409)
 
-[node name="BackgroundMap" type="TextureRect" parent="MapLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Camera2D" parent="MapLayer" instance=ExtResource("1_m8i7k")]
+unique_name_in_owner = true
 
-[node name="GridContainer" type="GridContainer" parent="MapLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="MapRect" type="TextureRect" parent="MapLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 3
 
-[node name="Camera2D" type="Camera2D" parent="MapLayer"]
-
-[node name="TokenContainer" type="Node2D" parent="."]
-
-[node name="Token" parent="TokenContainer" instance=ExtResource("1_wbfu4")]
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="TokenContainer"]
-_spawnable_scenes = PackedStringArray("uid://d2mgo3gyuy0rf")
+[node name="TokenContainer" type="Node2D" parent="." groups=["WorldLayer"]]
